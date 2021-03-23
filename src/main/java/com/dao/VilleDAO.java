@@ -8,13 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.dto.Ville;
-@Service
+@Component
 public class VilleDAO {
 	@Autowired
-	private DaoFactory daoFactory;
+	private  DaoFactory daoFactory;
 	
 	
 	
@@ -34,7 +35,7 @@ public class VilleDAO {
             		+ "ville_france;");
 
             while (resultat.next()) {
-            	villes.add(new Ville(resultat.getString(2)));
+            	villes.add(new Ville(resultat.getString(2),resultat.getString(3)));
             }
         }catch (SQLException e){
         	e.printStackTrace();
@@ -60,7 +61,7 @@ public class VilleDAO {
             		+ "ville_france WHERE codePostal ="+param+ ";");
 
             while (resultat.next()) {
-            	villes.add(new Ville(resultat.getString(2)));
+            	villes.add(new Ville(resultat.getString(2),resultat.getString(3)));
             }
         }catch (SQLException e){
         	e.printStackTrace();
