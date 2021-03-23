@@ -8,20 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.dto.Ville;
+@Service
 public class VilleDAO {
-	
 	@Autowired
 	private DaoFactory daoFactory;
 	
 	
-	VilleDAO(DaoFactory daoFactory){
-		this.daoFactory=daoFactory;
-	}
 	
-	
-	public List<String> nomVilles(){
-		List<String> villes = new ArrayList<String>();
+	public List<Ville> nomVilles(){
+		List<Ville> villes = new ArrayList<Ville>();
         Connection connexion = null;
         Statement statement = null;
         ResultSet resultat = null;
@@ -36,7 +34,7 @@ public class VilleDAO {
             		+ "ville_france;");
 
             while (resultat.next()) {
-            	villes.add(resultat.getString(2));
+            	villes.add(new Ville(resultat.getString(2)));
             }
         }catch (SQLException e){
         	e.printStackTrace();
@@ -46,8 +44,8 @@ public class VilleDAO {
         
 	}
 	
-	public List<String> infoVilleParam(String param){
-		List<String> villes = new ArrayList<String>();
+	public List<Ville> infoVilleParam(String param){
+		List<Ville> villes = new ArrayList<Ville>();
         Connection connexion = null;
         Statement statement = null;
         ResultSet resultat = null;
@@ -62,7 +60,7 @@ public class VilleDAO {
             		+ "ville_france WHERE codePostal ="+param+ ";");
 
             while (resultat.next()) {
-            	villes.add(resultat.getString(2));
+            	villes.add(new Ville(resultat.getString(2)));
             }
         }catch (SQLException e){
         	e.printStackTrace();

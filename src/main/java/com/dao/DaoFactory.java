@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.springframework.context.annotation.Configuration;
+@Configuration
 public class DaoFactory {
 	private String url;
     private String username;
@@ -29,11 +31,6 @@ public class DaoFactory {
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, username, password);
-    }
-
-    // R�cup�ration du Dao
-    public VilleDAO getVilleDao() {
-        return new VilleDAO(this);
     }
 
 }

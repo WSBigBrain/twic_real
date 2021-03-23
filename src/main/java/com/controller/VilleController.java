@@ -10,19 +10,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blo.VilleBLO;
+import com.dto.Ville;
 
 
 @RestController
 public class VilleController {
 	
-
+	private VilleBLO villeService;
+	
 	@Autowired
-	VilleBLO villeBLOService;
+	public VilleController(final VilleBLO villeService){
+	  this.villeService = villeService;
+	}
 	
 	
 	@RequestMapping(value ="/ville",method= RequestMethod.GET)
 	@ResponseBody
-	public List<String>  appelGet(@RequestParam(required = false,value = "codePostal") String codePostal) {
-		return villeBLOService.getInfoVilles(codePostal);
+	public List<Ville>  appelGet(@RequestParam(required = false,value = "codePostal") String codePostal) {
+		return villeService.getInfoVilles(codePostal);
 	}
 }
