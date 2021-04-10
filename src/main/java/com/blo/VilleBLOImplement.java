@@ -10,7 +10,7 @@ import com.dao.VilleDAO;
 import com.dto.Ville;
 
 
-@Component
+@Service 
 public class VilleBLOImplement implements VilleBLO {
 	@Autowired
 	private VilleDAO villeDao;
@@ -22,5 +22,10 @@ public class VilleBLOImplement implements VilleBLO {
 		}else {
 			return villeDao.infoVilleParam(param);
 		}
+	}
+	
+	@Override
+	public Ville ajouterVille(Ville ville) {
+		return villeDao.ajouterVille(ville);
 	}
 }

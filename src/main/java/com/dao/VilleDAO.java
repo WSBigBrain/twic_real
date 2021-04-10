@@ -9,9 +9,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
+import com.dto.Coordonnees;
 import com.dto.Ville;
+import java.sql.PreparedStatement;
 @Component
 public class VilleDAO {
 	@Autowired
@@ -35,7 +35,7 @@ public class VilleDAO {
             		+ "ville_france;");
 
             while (resultat.next()) {
-            	villes.add(new Ville(resultat.getString(2),resultat.getString(3)));
+            	villes.add(new Ville(resultat.getString(2),resultat.getString(3),new Coordonnees(resultat.getString(7),resultat.getString(6)),resultat.getString(1),resultat.getString(4),resultat.getString(5)));
             }
         }catch (SQLException e){
         	e.printStackTrace();
@@ -58,10 +58,10 @@ public class VilleDAO {
             resultat = statement.executeQuery("SELECT "
             		+ "* "
             		+ "FROM "
-            		+ "ville_france WHERE codePostal ="+param+ ";");
+            		+ "ville_france WHERE Code_postal ="+param+ ";");
 
             while (resultat.next()) {
-            	villes.add(new Ville(resultat.getString(2),resultat.getString(3)));
+            	villes.add(new Ville(resultat.getString(2),resultat.getString(3),new Coordonnees(resultat.getString(7),resultat.getString(6)),resultat.getString(1),resultat.getString(4),resultat.getString(5)));
             }
         }catch (SQLException e){
         	e.printStackTrace();
@@ -69,6 +69,35 @@ public class VilleDAO {
         }
         return villes;
         
+	}
+	
+	public Ville ajouterVille(Ville ville) {
+		Connection connexion = null;
+        Statement statement = null;
+        ResultSet resultat = null;
+
+        
+        
+        try {
+            connexion = daoFactory.getConnection();
+            PreparedStatement prepared  = connexion.prepareStatement("INSERT INTO ville_france (Code_commune_INSEE,Nom_commune,Code_postal,Libelle_acheminement,Ligne_5,Latitude,Longitude)"
+            		+ "VALUES ( ? , ? , ? , ? , ? , ? , ? )" );
+            prepared.setString(1, ville.getCodeInsee());
+            prepared.setString(2, ville.getNom());
+            prepared.setString(3, ville.getCodePostal());
+            prepared.setString(4, ville.getLibelle());
+            prepared.setString(5, ville.getLigne5());
+            prepared.setString(6, ville.getCoordonnees().getLatitude());
+            prepared.setString(7, ville.getCoordonnees().getLongitude());
+            prepared.executeUpdate();
+            
+
+        }catch (SQLException e){
+        	e.printStackTrace();
+        	
+        }
+        return ville;
+		
 	}
 	
 }
