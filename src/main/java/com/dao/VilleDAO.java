@@ -48,17 +48,18 @@ public class VilleDAO {
 	public List<Ville> infoVilleParam(String param){
 		List<Ville> villes = new ArrayList<Ville>();
         Connection connexion = null;
-        Statement statement = null;
+        PreparedStatement statement = null;
         ResultSet resultat = null;
         
         
         try {
             connexion = daoFactory.getConnection();
-            statement = connexion.createStatement();
-            resultat = statement.executeQuery("SELECT "
+            statement = connexion.prepareStatement("SELECT "
             		+ "* "
             		+ "FROM "
-            		+ "ville_france WHERE Code_postal ="+param+ ";");
+            		+ "ville_france WHERE Code_postal = ?");
+            statement.setString(1, param);
+            resultat=statement.executeQuery();
 
             while (resultat.next()) {
             	villes.add(new Ville(resultat.getString(2),resultat.getString(3),new Coordonnees(resultat.getString(7),resultat.getString(6)),resultat.getString(1),resultat.getString(4),resultat.getString(5)));

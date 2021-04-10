@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "longitude", "latitude" })
-@Generated("jsonschema2pojo")
 public class Coordonnees {
 	
 	public Coordonnees() {	
