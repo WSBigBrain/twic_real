@@ -38,7 +38,6 @@ public class VilleDAO {
 			e.printStackTrace();
 
 		} finally {
-			connexion.close();
 			statement.close();
 		}
 		return villes;
@@ -66,7 +65,6 @@ public class VilleDAO {
 			e.printStackTrace();
 
 		} finally {
-			connexion.close();
 			statement.close();
 		}
 		return villes;
@@ -95,7 +93,6 @@ public class VilleDAO {
 			e.printStackTrace();
 
 		} finally {
-			connexion.close();
 			prepared.close();
 		}
 		return ville;
