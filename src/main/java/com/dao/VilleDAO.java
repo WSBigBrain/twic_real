@@ -21,24 +21,23 @@ public class VilleDAO {
 	public List<Ville> nomVilles() throws SQLException {
 		List<Ville> villes = new ArrayList<Ville>();
 		Connection connexion = null;
-		Statement statement = null;
 		ResultSet resultat = null;
+		Statement statement=null;
 
-		try {
+		try  {
+			
 			connexion = daoFactory.getConnection();
 			statement = connexion.createStatement();
 			resultat = statement.executeQuery("SELECT " + "* " + "FROM " + "ville_france;");
-
 			while (resultat.next()) {
 				villes.add(new Ville(resultat.getString(2), resultat.getString(3),
 						new Coordonnees(resultat.getString(7), resultat.getString(6)), resultat.getString(1),
 						resultat.getString(4), resultat.getString(5)));
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-		} finally {
+			
+		}finally {
 			statement.close();
+			resultat.close();
 		}
 		return villes;
 
@@ -60,13 +59,14 @@ public class VilleDAO {
 				villes.add(new Ville(resultat.getString(2), resultat.getString(3),
 						new Coordonnees(resultat.getString(7), resultat.getString(6)), resultat.getString(1),
 						resultat.getString(4), resultat.getString(5)));
+
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 
 		} finally {
 			statement.close();
+			resultat.close();
 		}
+
 		return villes;
 
 	}
@@ -88,9 +88,6 @@ public class VilleDAO {
 			prepared.setString(6, ville.getCoordonnees().getLatitude());
 			prepared.setString(7, ville.getCoordonnees().getLongitude());
 			prepared.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
 
 		} finally {
 			prepared.close();
