@@ -1,9 +1,9 @@
 package com.blo;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.dao.VilleDAO;
@@ -18,14 +18,31 @@ public class VilleBLOImplement implements VilleBLO {
 	@Override
 	public	List<Ville> getInfoVilles(String param) {
 		if(param==null) {
-			return villeDao.nomVilles();
+			try {
+				return villeDao.nomVilles();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else {
-			return villeDao.infoVilleParam(param);
+			try {
+				return villeDao.infoVilleParam(param);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		return null;
 	}
 	
 	@Override
 	public Ville ajouterVille(Ville ville) {
-		return villeDao.ajouterVille(ville);
+		try {
+			return villeDao.ajouterVille(ville);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ville;
 	}
 }
