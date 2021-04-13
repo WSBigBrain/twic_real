@@ -1,3 +1,5 @@
+
+  
 package com.dao;
 
 import java.sql.Connection;
@@ -34,10 +36,11 @@ public class VilleDAO {
 						new Coordonnees(resultat.getString(7), resultat.getString(6)), resultat.getString(1),
 						resultat.getString(4), resultat.getString(5)));
 			}
-			
-		}finally {
 			statement.close();
 			resultat.close();
+		}catch (SQLException e){
+			e.printStackTrace();
+			
 		}
 		return villes;
 
@@ -61,10 +64,12 @@ public class VilleDAO {
 						resultat.getString(4), resultat.getString(5)));
 
 			}
-
-		} finally {
 			statement.close();
 			resultat.close();
+
+		} catch (SQLException e){
+			e.printStackTrace();
+			
 		}
 
 		return villes;
@@ -88,12 +93,16 @@ public class VilleDAO {
 			prepared.setString(6, ville.getCoordonnees().getLatitude());
 			prepared.setString(7, ville.getCoordonnees().getLongitude());
 			prepared.executeUpdate();
-
-		} finally {
 			prepared.close();
+
+
+		} catch (SQLException e){
+			e.printStackTrace();
+			
 		}
 		return ville;
 
 	}
 
 }
+
